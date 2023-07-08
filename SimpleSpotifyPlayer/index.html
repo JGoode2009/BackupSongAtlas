@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- https://developer.spotify.com/documentation/web-playback-sdk/tutorials/getting-started -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Spotify Web Playback SDK Quick Start</title>
+</head>
+
+
+
+<body>
+    <h1>Spotify Web Playback SDK Quick Start</h1>
+    <button id="previousTrack">Back Track</button>
+    <button id="togglePlay">Toggle Play</button>
+    <button id="nextTrack">Next Track</button>
+    <script src="https://sdk.scdn.co/spotify-player.js"></script>
+    <script>
+        window.onSpotifyWebPlaybackSDKReady = () => {
+            // note that token is hard coded, need to update 
+            const token = 'BQC6gBOdcOWtIGBk2lNeoJ0wsRL_8qMR-0hVz2JV4IrEqr-AMc4_mp_JnRrBkDU-md3FDxBKWCXxl8_vQPK7624XDZva6evcTeHJ758uVjEgt5XuCSU'
+            const player = new Spotify.Player({
+                name: 'Web Playback SDK Quick Start Player',
+                getOAuthToken: cb => { cb(token); },
+                volume: 0.5
+            });
+            // Ready
+            player.addListener('ready', ({ device_id }) => {
+                console.log('Ready with Device ID', device_id);
+
+                player.getCurrentState().then(state => {
+                    if (!state) {
+                        console.error('User is not playing music through the Web Playback SDK');
+                        return;
+                    }
+
+                    var current_track = state.track_window.current_track;
+                    var next_track = state.track_window.next_tracks[0];
+
+                    console.log('Currently Playing', current_track);
+                    console.log('Playing Next', next_track);
+                });
+
+            });
+
+            // Not Ready
+            player.addListener('not_ready', ({ device_id }) => {
+                console.log('Device ID has gone offline', device_id);
+            });
+
+            player.addListener('initialization_error', ({ message }) => {
+                console.error(message);
+            });
+
+            player.addListener('authentication_error', ({ message }) => {
+                console.error(message);
+            });
+
+            player.addListener('account_error', ({ message }) => {
+                console.error(message);
+            });
+
+            document.getElementById('togglePlay').onclick = function () {
+                player.togglePlay();
+            };
+            document.getElementById('nextTrack').onclick = function () {
+                player.nextTrack().then(() => {
+                    console.log('skipped to next track')
+                });
+            };
+            document.getElementById('previousTrack').onclick = function () {
+                player.previousTrack().then(() => {
+                    console.log('Set to previous track!');
+                });
+
+            };
+
+
+            player.connect();
+        }
+
+
+
+
+    </script>
+
+</body>
+
+</html>
