@@ -1,0 +1,13 @@
+*{
+    background-color: teal;
+    color: whitesmoke;
+    text-align: center;
+    margin-top: 2%;
+}
+
+button {
+    font-size: x-large;
+    margin: 5px;
+}
+button:hover {
+    background-color: mediumslateblue;
