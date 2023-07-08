@@ -1,0 +1,26 @@
+body{
+    background-color: mediumslateblue;
+}
+
+
+h1 {
+    text-align: center;
+}
+h2 {
+    text-align: center;
+    list-style-type: none;
+    background-color: aliceblue;
+    border-radius: 15px;
+    margin-bottom: 10px;
+}
+
+ul li {
+   list-style-type: none;
+   background-color: aliceblue;
+   border-radius: 15px;
+   margin-bottom: 10px;
+}
+
+/* iframe {
+    background-color: mediumaquamarine;
+} */
